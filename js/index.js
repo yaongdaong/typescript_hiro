@@ -405,3 +405,48 @@ class Home {
 const redHome = new Home();
 redHome.rooms = -3;
 console.log(`방의 개수는 ${redHome.rooms}`);
+class myHouse {
+    activateSecurity(isOn) {
+        if (isOn) {
+            console.log("보안 시스템을 활성화했습니다.");
+        }
+        else {
+            console.log("보안 시스템을 중지했습니다.");
+        }
+    }
+}
+const redMyHouse = new myHouse();
+// 활성화
+redMyHouse.activateSecurity(true);
+// 중지
+redMyHouse.activateSecurity(false);
+class BigHouse {
+    constructor() {
+        this.color = "하얀색";
+        this._rooms = 1;
+    }
+    // 게터 선언
+    get rooms() {
+        return this._rooms;
+    }
+    // 세터 선언
+    set rooms(count) {
+        if (count < 0) {
+            this._rooms = 0;
+        }
+        else {
+            this._rooms = count;
+        }
+    }
+    activateSecurity(isOn) {
+        if (isOn) {
+            console.log("보안 시스템 활성화");
+        }
+        else {
+            console.log("보안 시스템 중지");
+        }
+    }
+}
+const redBigHouse = new BigHouse();
+console.log(`큰집 색은 ${redBigHouse.color}`);
+console.log(`큰집 방수는 ${redBigHouse.rooms}`);
