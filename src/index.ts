@@ -375,10 +375,62 @@ sampleFunction3();
 
 class House {
     // 프로퍼티 정의
-    color: string = ""; // 집의 색상
-    rooms: number = 0; // 방의 개수
+    // color: string = ""; // 집의 색상
+    // rooms: number = 0; // 방의 개수
     // 메서드 정의
+
+    public color: string = "흰색";
+    public rooms: number = 1;
+
+    public activateSecurity(isOn: boolean) {
+        if (isOn) {
+            console.log("보안활성");
+        } else {
+            console.log("보안해제");
+        }
+    }
 }
+
+class GarageHouse extends House {
+    // 차고 유무를 나타내는프로퍼티(true:차고있음/false:차고없음)
+    public hasGarage: boolean = false;
+    // 차고를 열고 닫는 메서드 정의(true:차고열기/false:차고닫기)
+    public openGarage(isOpen: boolean): void {
+        if (this.hasGarage) {
+            // 차고가 있니?
+            if (isOpen) {
+                // 차고를 여는 경우
+                console.log("차고를 열었습니다.");
+            } else {
+                // 차고를 닫는 경우
+                console.log("차고를 닫았습니다.");
+            }
+        } else {
+            // 차고가 없는 경우
+            console.log("차고가 없습니다.");
+        }
+    }
+
+    // 메서드 오버라이드
+    activateSecurity(isOn: boolean) {
+        if (isOn) {
+            console.log("보안활성화하였다.");
+            console.log("차고보안도활성화하였다");
+        } else {
+            console.log("보안해제하였다.");
+            console.log("차고보안도해제하였다.");
+        }
+    }
+}
+const gt = new GarageHouse();
+gt.activateSecurity(true);
+gt.activateSecurity(false);
+const gh = new GarageHouse(); // 인스턴스를 생성
+gh.hasGarage = true; // 차고 있음
+gh.openGarage(true); // 차고 열기
+gh.openGarage(false); // 차고 닫기
+gh.activateSecurity(true); //보안 활성화
+
 const redHouse = new House();
 redHouse.color = "red";
 redHouse.rooms = 3;
@@ -451,3 +503,31 @@ class BigHouse {
 const redBigHouse = new BigHouse();
 console.log(`큰집 색은 ${redBigHouse.color}`);
 console.log(`큰집 방수는 ${redBigHouse.rooms}`);
+// 접근 제어자
+class School {
+    public color: string;
+    private rooms: number;
+    protected address: string;
+    constructor(color: string, rooms: number, address: string) {
+        this.color = color;
+        this.rooms = rooms;
+        this.address = address;
+    }
+    public displayColor(): void {
+        console.log(`이 학교 색은 ${this.color}입니다.`);
+    }
+    private countRooms(): number {
+        return this.rooms;
+    }
+    protected getAddress(): string {
+        return this.address;
+    }
+}
+const redSchool = new School("하얀색", 1, "서울시");
+redSchool.color = "빨간색";
+redSchool.displayColor();
+// 아래는 접근 불가
+// redSchool.rooms = 2;
+// redSchool.countRooms();
+// redSchool.address = "부산시";
+// redSchool.getAddress();
