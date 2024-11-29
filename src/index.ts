@@ -374,19 +374,25 @@ console.log(`글로벌 스코프:${globalVariable}`);
 sampleFunction3();
 
 class House {
-    // 프로퍼티 정의
-    // color: string = ""; // 집의 색상
-    // rooms: number = 0; // 방의 개수
-    // 메서드 정의
-
     public color: string = "흰색";
     public rooms: number = 1;
 
-    public activateSecurity(isOn: boolean) {
+    // 오버로드 시그니처
+    activateSecurity(isOn: boolean): void;
+    activateSecurity(isOn: boolean, hasGarage: boolean): void;
+
+    // 실제 구현 (모든 오버로드를 처리)
+    activateSecurity(isOn: boolean, hasGarage?: boolean): void {
         if (isOn) {
-            console.log("보안활성");
+            console.log("보안 활성");
+            if (hasGarage) {
+                console.log("차고 보안도 활성화");
+            }
         } else {
-            console.log("보안해제");
+            console.log("보안 해제");
+            if (hasGarage) {
+                console.log("차고 보안도 해제");
+            }
         }
     }
 }
@@ -531,3 +537,31 @@ redSchool.displayColor();
 // redSchool.countRooms();
 // redSchool.address = "부산시";
 // redSchool.getAddress();
+
+class CatHouse {
+    private rooms: number;
+    constructor(rooms: number) {
+        this.rooms = rooms;
+    }
+    protected getRooms(): number {
+        return this.rooms;
+    }
+}
+class DogHouse extends CatHouse {
+    private hasDog: boolean;
+    constructor(rooms: number, hasDog: boolean) {
+        super(rooms);
+        this.hasDog = hasDog;
+    }
+    public getHasDog(): boolean {
+        return this.hasDog;
+    }
+    public getHouseDetails(): void {
+        console.log(`방 수는 ${this.getRooms()}입니다.`);
+        if (this.hasDog) {
+            console.log("개가 있습니다.");
+        }
+    }
+}
+const catdogHouse = new DogHouse(3, true);
+catdogHouse.getHouseDetails();
